@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <ProjectReference Include="..\AsteroidsApp.Application\AsteroidsApp.Application.csproj" />
+    <ProjectReference Include="..\AsteroidsApp.Domain\AsteroidsApp.Domain.csproj" />
+    <ProjectReference Include="..\AsteroidsApp.Infrastructure\AsteroidsApp.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+</Project>

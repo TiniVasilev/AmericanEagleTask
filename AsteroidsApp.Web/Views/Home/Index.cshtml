@@ -1,0 +1,67 @@
+@{
+    ViewData["Title"] = "Asteroids & APOD";
+    var asteroids = ViewBag.Asteroids as IEnumerable<AsteroidsApp.Application.DTOs.AsteroidDto>;
+    var apod = ViewBag.Apod as AsteroidsApp.Application.DTOs.ApodImageDto;
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<form method="get" class="mb-3 d-flex align-items-end gap-2">
+    <div>
+        <label for="date">Select date:</label>
+        <input type="date" id="date" name="date" value="@ViewBag.SelectedDate" max="@DateTime.UtcNow.ToString("yyyy-MM-dd")" />
+    </div>
+    <button type="submit" class="btn btn-primary btn-sm">Show</button>
+    <a class="btn btn-success btn-sm ms-2" href="@Url.Action("ExportToExcel", new { date = ViewBag.SelectedDate })">Export to Excel</a>
+</form>
+
+<h2>Asteroids for @ViewBag.SelectedDate</h2>
+@if (asteroids != null)
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Diameter</th>
+                <th>Hazardous</th>
+                <th>Close Approach</th>
+                <th>Miss Distance (km)</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var a in asteroids)
+        {
+            <tr>
+                <td>@a.Name</td>
+                <td>@a.EstimatedDiameter</td>
+                <td>@a.IsPotentiallyHazardous</td>
+                <td>@a.CloseApproachDate.ToShortDateString()</td>
+                <td>@a.MissDistanceKm</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No asteroid data available.</p>
+}
+
+<hr />
+
+<h2>Astronomy Picture of the Day</h2>
+@if (apod != null)
+{
+    <div>
+        <h3>@apod.Title (@apod.Date.ToShortDateString())</h3>
+        <img src="@apod.Url" alt="APOD" style="max-width:100%;height:auto;" />
+        <p>@apod.Explanation</p>
+    </div>
+}
+else
+{
+    <p>No APOD data available.</p>
+}
